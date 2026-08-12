@@ -1,0 +1,14 @@
+{
+  "date": "아직 자동 수집 전",
+  "offers": [
+    {
+      "company": "샘플 카드사",
+      "platform": "샘플 플랫폼",
+      "url": "https://github.com",
+      "status": "샘플",
+      "highlights": [
+        "자동 수집이 실행되면 이 내용이 실제 카드 오퍼로 바뀝니다."
+      ]
+    }
+  ]
+}
