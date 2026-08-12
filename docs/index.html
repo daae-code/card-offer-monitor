@@ -27,4 +27,327 @@
       font-size: 28px;
     }
 
-    .
+    .sub {
+      color: #667085;
+      margin: 0;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 18px 0;
+    }
+
+    input, select {
+      height: 40px;
+      padding: 0 12px;
+      border: 1px solid #d0d5dd;
+      border-radius: 8px;
+      background: #fff;
+      font-size: 14px;
+    }
+
+    input {
+      min-width: 260px;
+      flex: 1;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 18px 0;
+    }
+
+    .metric {
+      background: #fff;
+      border: 1px solid #e4e7ec;
+      border-radius: 8px;
+      padding: 14px;
+    }
+
+    .metric b {
+      display: block;
+      font-size: 22px;
+      margin-top: 4px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      background: #fff;
+      border: 1px solid #e4e7ec;
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 980px;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 13px 14px;
+      border-bottom: 1px solid #eef0f3;
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    th {
+      background: #f9fafb;
+      color: #475467;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .company {
+      font-weight: 800;
+      font-size: 15px;
+      white-space: nowrap;
+    }
+
+    .amount {
+      font-weight: 800;
+      color: #0b57d0;
+      white-space: nowrap;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #eef4ff;
+      color: #175cd3;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .muted {
+      color: #667085;
+    }
+
+    .details {
+      max-width: 360px;
+    }
+
+    .details ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .details li {
+      margin-bottom: 5px;
+    }
+
+    a {
+      color: #0b57d0;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .empty {
+      background: #fff;
+      border: 1px solid #e4e7ec;
+      border-radius: 8px;
+      padding: 24px;
+      color: #667085;
+    }
+
+    @media (max-width: 720px) {
+      h1 {
+        font-size: 24px;
+      }
+
+      .summary {
+        grid-template-columns: 1fr;
+      }
+
+      input, select {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>카드 오퍼 리포트</h1>
+      <p class="sub" id="date">불러오는 중...</p>
+    </header>
+
+    <section class="toolbar">
+      <input id="q" placeholder="카드사, 플랫폼, 조건 검색" />
+      <select id="status">
+        <option value="">전체 상태</option>
+        <option value="확인됨">확인됨</option>
+        <option value="요약 부족">요약 부족</option>
+        <option value="실패">실패</option>
+      </select>
+    </section>
+
+    <section class="summary">
+      <div class="metric">
+        <span class="muted">전체 오퍼</span>
+        <b id="total">0</b>
+      </div>
+      <div class="metric">
+        <span class="muted">확인됨</span>
+        <b id="ok">0</b>
+      </div>
+      <div class="metric">
+        <span class="muted">수집 실패/부족</span>
+        <b id="needs">0</b>
+      </div>
+    </section>
+
+    <section class="table-wrap" id="tableWrap">
+      <table>
+        <thead>
+          <tr>
+            <th>카드사</th>
+            <th>플랫폼</th>
+            <th>최대 혜택</th>
+            <th>핵심 조건/요약</th>
+            <th>기간</th>
+            <th>상태</th>
+            <th>원문</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </section>
+
+    <section class="empty" id="empty" hidden>
+      표시할 오퍼가 없습니다.
+    </section>
+  </div>
+
+  <script>
+    let all = [];
+
+    function pickAmount(offer) {
+      if (offer.maxBenefit) return offer.maxBenefit;
+
+      const text = (offer.highlights || []).join(" ");
+      const matches = text.match(/최대\s*[0-9,.]+\s*만원|[0-9,.]+\s*만원/g);
+
+      if (!matches || matches.length === 0) return "확인 필요";
+      return matches[0].replace(/\s+/g, " ");
+    }
+
+    function pickPeriod(offer) {
+      if (offer.period) return offer.period;
+
+      const text = (offer.highlights || []).join(" ");
+      const dateMatch = text.match(/20[0-9]{2}[.\-/][0-9]{1,2}[.\-/][0-9]{1,2}\s*[~\-]\s*20[0-9]{2}[.\-/][0-9]{1,2}[.\-/][0-9]{1,2}/);
+
+      return dateMatch ? dateMatch[0] : "확인 필요";
+    }
+
+    function cleanHighlights(offer) {
+      if (offer.summary) return [offer.summary];
+
+      const noisyWords = [
+        "본문 바로가기",
+        "서비스메뉴 바로가기",
+        "로그인",
+        "로딩중",
+        "사업자 정보",
+        "펼치기",
+        "전체메뉴",
+        "현재 위치"
+      ];
+
+      return (offer.highlights || [])
+        .map(x => String(x).replace(/\s+/g, " ").trim())
+        .filter(x => x.length > 0)
+        .filter(x => !noisyWords.some(word => x.includes(word)))
+        .slice(0, 3);
+    }
+
+    async function load() {
+      const res = await fetch("./data/latest.json?ts=" + Date.now());
+      const data = await res.json();
+
+      all = data.offers || [];
+      document.getElementById("date").textContent = "최근 업데이트: " + data.date;
+
+      render();
+    }
+
+    function render() {
+      const q = document.getElementById("q").value.trim();
+      const status = document.getElementById("status").value;
+
+      const list = all.filter(offer => {
+        const blob = [
+          offer.company,
+          offer.platform,
+          offer.status,
+          pickAmount(offer),
+          pickPeriod(offer),
+          ...(offer.highlights || [])
+        ].join(" ");
+
+        return (!q || blob.includes(q)) && (!status || offer.status === status);
+      });
+
+      document.getElementById("total").textContent = all.length;
+      document.getElementById("ok").textContent = all.filter(o => o.status === "확인됨").length;
+      document.getElementById("needs").textContent = all.filter(o => o.status !== "확인됨").length;
+
+      document.getElementById("tableWrap").hidden = list.length === 0;
+      document.getElementById("empty").hidden = list.length !== 0;
+
+      document.getElementById("rows").innerHTML = list.map(offer => {
+        const details = cleanHighlights(offer);
+        const detailHtml = details.length
+          ? `<ul>${details.map(x => `<li>${escapeHtml(x)}</li>`).join("")}</ul>`
+          : `<span class="muted">요약할 핵심 조건을 찾지 못했습니다.</span>`;
+
+        return `
+          <tr>
+            <td class="company">${escapeHtml(offer.company || "-")}</td>
+            <td>${escapeHtml(offer.platform || "-")}</td>
+            <td class="amount">${escapeHtml(pickAmount(offer))}</td>
+            <td class="details">${detailHtml}</td>
+            <td>${escapeHtml(pickPeriod(offer))}</td>
+            <td><span class="badge">${escapeHtml(offer.status || "확인 필요")}</span></td>
+            <td><a href="${offer.url}" target="_blank" rel="noopener">보기</a></td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    document.getElementById("q").addEventListener("input", render);
+    document.getElementById("status").addEventListener("change", render);
+
+    load().catch(() => {
+      document.getElementById("date").textContent = "데이터를 불러오지 못했습니다.";
+      document.getElementById("tableWrap").hidden = true;
+      document.getElementById("empty").hidden = false;
+    });
+  </script>
+</body>
+</html>
