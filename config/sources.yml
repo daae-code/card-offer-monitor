@@ -1,0 +1,12 @@
+sources:
+  - company: "KB국민카드"
+    platform: "네이버페이"
+    url: "https://card.pay.naver.com/home/promotion?cardCompanyId=CCKM&cardIssuerCode=100"
+
+  - company: "신한카드"
+    platform: "네이버페이"
+    url: "https://card.pay.naver.com/home/promotion?cardCompanyId=CCLG&cardIssuerCode=CCLG"
+
+  - company: "현대카드"
+    platform: "현대카드 공식"
+    url: "https://www.hyundaicard.com/cpb/ev/CPBEV0101_01.hc"
