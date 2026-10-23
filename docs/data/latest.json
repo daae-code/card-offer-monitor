@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-22",
+  "date": "2026-10-23",
   "offers": [
     {
       "company": "KB국민카드",
@@ -26,7 +26,7 @@
       "platform": "현대카드 공식",
       "url": "https://www.hyundaicard.com/cpb/ev/CPBEV0101_01.hc",
       "highlights": [
-        "수집 실패: HTTPSConnectionPool(host='www.hyundaicard.com', port=443): Max retries exceeded with url: /cpb/ev/CPBEV0101_01.hc (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.hyundaicard.com', port=443) at 0x7f4ea4af9b90>, 'Connection to www.hyundaicard.com timed out. (connect timeout=20)'))"
+        "수집 실패: HTTPSConnectionPool(host='www.hyundaicard.com', port=443): Max retries exceeded with url: /cpb/ev/CPBEV0101_01.hc (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.hyundaicard.com', port=443) at 0x7f5cba229990>, 'Connection to www.hyundaicard.com timed out. (connect timeout=20)'))"
       ],
       "status": "실패"
     }
