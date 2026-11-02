@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-01",
+  "date": "2026-11-02",
   "offers": [
     {
       "company": "KB국민카드",
@@ -26,20 +26,9 @@
       "platform": "현대카드 공식",
       "url": "https://www.hyundaicard.com/cpb/ev/CPBEV0101_01.hc",
       "highlights": [
-        "현대카드 회원가입 로그인 이벤트 진행 중 종료 전체 캐시백 무이자 할인 M포인트 기타 검색어 삭제하기 검색하기 현대카드 호텔위크 10 특급 호텔 휴식 페스티벌 2026.",
-        " 31 종료 대한항공카드 이벤트 최대 1만 마일리지 + 항공권 추첨 2026.",
-        " 30 종료 Maurizio Cattelan 스페셜 플레이트 및 패키지 발급 수수료 캐시백 2026.",
-        " 30 종료 the Green Edition4 신규 회원 연회비 캐시백 이벤트 2026.",
-        " 30 종료 the Pink Edition3 신규 회원 연회비 캐시백 이벤트 2026.",
-        " 30 종료 케이뱅크 BUSINESS 현대카드 최대 30% 적립+최대 48만원 캐시백 2026.",
-        " 30 종료 현대카드 알파벳카드 신규 회원 연회비 캐시백 이벤트 2026.",
-        " 30 종료 현대카드 ZERO Up 신규 회원 연회비 캐시백 이벤트 2026.",
-        " 30 종료 현대카드MY BUSINESS the Orange 신규 회원 연회비 캐시백 이벤트 2026.",
-        " 30 종료 the Orange 신규회원 연회비 캐시백 이벤트 2026.",
-        " 30 종료 현대 소상공인 특례 햇살론카드 4만원 캐시백 이벤트 2026.",
-        " 30 종료 DB손해보험 현대카드 신규 회원 연회비 캐시백 이벤트 2026."
+        "수집 실패: HTTPSConnectionPool(host='www.hyundaicard.com', port=443): Max retries exceeded with url: /cpb/ev/CPBEV0101_01.hc (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.hyundaicard.com', port=443) at 0x7f21385a8f50>, 'Connection to www.hyundaicard.com timed out. (connect timeout=20)'))"
       ],
-      "status": "확인됨"
+      "status": "실패"
     }
   ]
 }
